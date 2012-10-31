@@ -1,0 +1,25 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<h2>@ViewBag.Message</h2>
+
+<div id ="welcome-message"></div>
+
+@if(!string.IsNullOrWhiteSpace(ViewBag.UserName)) {
+<script type="text/javascript">
+    $(function () {
+        var message = 'Welcome, @ViewBag.UserName!';
+        @*var message = 'Welcome, @Ajax.JavaScriptStringEncode(ViewBag.UserName)!';*@
+        $("#welcome-message").html(message).hide().show('slow');
+    });
+</script>
+}
+
+@*access with URL http://localhost:1956/Home/Index?UserName=fernando to see message
+access with URL http://localhost:1956/?UserName=%3Cscript%3Ealert%28%27pwnd%27%29%3C/script%3E attack defeated by request validation
+access with URL http://localhost:1956/?UserName=fernando\x3cscript\x3e%20alert%28\x27pwnd\x27%29%20\x3c/script\x3e attack succeeds, shows vulnerability to JavaScript encoding XSS
+switch to var message line which uses Ajax helper to show attack defeated, view page source to see encoding
+example from http://weblogs.asp.net/jgalloway/archive/2011/04/28/preventing-javascript-encoding-xss-attacks-in-asp-net-mvc.aspx
+
+see http://blog.osbornm.com/archive/2010/05/05/how-and-when-to-encode-for-the-web.aspx for info on JavaScript encoding*@
